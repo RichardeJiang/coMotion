@@ -12,6 +12,7 @@
          TextureView, etc.
     -->
 
+    <!--
     <org.opencv.android.JavaCameraView
         android:id="@+id/cam_view"
         android:layout_width="fill_parent"
@@ -21,6 +22,7 @@
         opencv:camera_id="front"
         opencv:show_fps="true"
         />
+        -->
 
 
     <!--
