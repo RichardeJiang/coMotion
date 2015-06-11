@@ -285,6 +285,10 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 break;
             }
 
+            case R.id.group: {
+
+            }
+
 
             case R.id.info: {
                 Activity activity = getActivity();

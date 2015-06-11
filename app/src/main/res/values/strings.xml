@@ -5,6 +5,7 @@
     <string name="record">Record</string>
     <string name="stop">Stop</string>
     <string name="description_info">Info</string>
+    <string name="group_record">Record All</string>
     <!--
     <string name="intro_message">Press to start recording</string>
     -->

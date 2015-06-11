@@ -21,8 +21,13 @@
         android:layout_alignParentTop="true"
         android:layout_below="@id/texture"
         android:layout_toRightOf="@id/texture"
-        android:background="#4285f4"
+
+        android:background="#0099cc"
         android:orientation="horizontal">
+
+        <!--
+        android:background="#4285f4"
+        -->
 
         <Button
             android:id="@+id/video"
@@ -30,6 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/record" />
+
+        <Button
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/group_record" />
 
         <ImageButton
             android:id="@+id/info"
