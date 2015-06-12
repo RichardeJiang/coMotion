@@ -7,8 +7,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.richardjiang.test.R;
+import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
+import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
 
-public class CameraActivity extends Activity {
+public class CameraActivity extends NetworkActivityTemplate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

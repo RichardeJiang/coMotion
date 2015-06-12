@@ -40,11 +40,15 @@ import android.widget.Toast;
 import com.example.richardjiang.test.R;
 
 import com.example.richardjiang.test.activityMain.ApplicationHelper;
+import com.example.richardjiang.test.activityMain.PauseResumeListener;
 import com.example.richardjiang.test.networkHandler.NetworkService;
 import com.example.richardjiang.test.networkHandler.Utils;
+import com.example.richardjiang.test.networkHandler.controller.NetworkController;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
 import com.example.richardjiang.test.networkHandler.impl.InternalMessage;
 import com.example.richardjiang.test.networkHandler.impl.NetworkMessageObject;
+
+import com.example.richardjiang.test.cameraHandler.CameraActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,6 +72,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
+
+
     /**
      * An {@link AutoFitTextureView} for camera preview.
      */
@@ -77,6 +83,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
      * Button to record video
      */
     private Button mButtonVideo;
+
+    //Button to start group recording
+    private Button mGroupVideo;
 
     /**
      * A refernce to the opened {@link android.hardware.camera2.CameraDevice}.
@@ -259,8 +268,54 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
         mButtonVideo = (Button) view.findViewById(R.id.video);
         mButtonVideo.setOnClickListener(this);
+
+        mGroupVideo = (Button) view.findViewById(R.id.group);
+        mGroupVideo.setOnClickListener(this);
+
         view.findViewById(R.id.info).setOnClickListener(this);
+
+        NetworkService.registerMessageHandler(internalMessageListener);
+
     }
+
+    private NetworkService.MessageHandleListener internalMessageListener = new NetworkService.MessageHandleListener() {
+        @Override
+        public boolean handleMessage(NetworkMessageObject message) {
+            String messageContent = "";
+            messageContent = InternalMessage.getMessageString(message);
+            System.out.println(message.getSourceIP() + " says: " + messageContent);
+
+            switch(message.code){
+                case InternalMessage.startNow: {
+                    ApplicationHelper.showToastMessage(message.getSourceIP() + " send to "
+                            + Utils.getIpAddressAsString(message.getTargetIP())
+                            + " and says "
+                            + messageContent);
+                    if (mIsRecordingVideo) {
+                        return false;
+                    } else {
+                        startRecordingVideo();
+                        return true;
+                    }
+                }
+
+                case InternalMessage.stopNow: {
+                    ApplicationHelper.showToastMessage(message.getSourceIP() + " send to "
+                        + Utils.getIpAddressAsString(message.getTargetIP())
+                        + " and says "
+                        +messageContent);
+                    if (mIsRecordingVideo) {
+                        stopRecordingVideo();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+    };
+
 
     @Override
     public void onResume() {
@@ -296,7 +351,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 if (!mIsRecordingVideo) {
                     try {
                         byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIP();
+                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "startNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
                                 new NetworkMessageObject(
@@ -312,7 +367,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 } else {
                     try {
                         byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIP();
+                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "stopNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
                                 new NetworkMessageObject(
@@ -556,6 +611,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         try {
             // UI
             mButtonVideo.setText(R.string.stop);
+            mGroupVideo.setText("Stop");
+
             mIsRecordingVideo = true;
 
             // Start recording
@@ -569,6 +626,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         // UI
         mIsRecordingVideo = false;
         mButtonVideo.setText(R.string.record);
+        mGroupVideo.setText("Record");
         // Stop recording
         mMediaRecorder.stop();
         mMediaRecorder.reset();

@@ -33,14 +33,13 @@
             android:id="@+id/video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/record" />
 
         <Button
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@id/video"
             android:text="@string/group_record" />
 
         <ImageButton
