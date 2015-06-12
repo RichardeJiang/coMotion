@@ -39,6 +39,13 @@ import android.widget.Toast;
 
 import com.example.richardjiang.test.R;
 
+import com.example.richardjiang.test.activityMain.ApplicationHelper;
+import com.example.richardjiang.test.networkHandler.NetworkService;
+import com.example.richardjiang.test.networkHandler.Utils;
+import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
+import com.example.richardjiang.test.networkHandler.impl.InternalMessage;
+import com.example.richardjiang.test.networkHandler.impl.NetworkMessageObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -286,7 +293,40 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
             }
 
             case R.id.group: {
-
+                if (!mIsRecordingVideo) {
+                    try {
+                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIP();
+                        String messageToSend = "startNow";
+                        WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
+                                new NetworkMessageObject(
+                                        messageToSend.getBytes(),
+                                        InternalMessage.startNow,
+                                        myIP,
+                                        targetIP));
+                        ApplicationHelper.showToastMessage("I send " + messageToSend);
+                        startRecordingVideo();
+                    } catch (Exception e) {
+                        ApplicationHelper.showToastMessage("Failed to send: startNow");
+                    }
+                } else {
+                    try {
+                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIP();
+                        String messageToSend = "stopNow";
+                        WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
+                                new NetworkMessageObject(
+                                        messageToSend.getBytes(),
+                                        InternalMessage.startNow,
+                                        myIP,
+                                        targetIP));
+                        ApplicationHelper.showToastMessage("I send " + messageToSend);
+                        stopRecordingVideo();
+                    } catch (Exception e) {
+                        ApplicationHelper.showToastMessage("Failed to send: stopNow");
+                    }
+                }
+                break;
             }
 
 
