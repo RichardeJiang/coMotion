@@ -16,11 +16,17 @@ public class CameraActivity extends NetworkActivityTemplate {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+
+
         if (null == savedInstanceState) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, CameraFragment.newInstance())
                     .commit();
         }
     }
+
+    @Override
+    protected boolean performConnectionDiscovery() {return true;}
 
 }

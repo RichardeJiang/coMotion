@@ -23,6 +23,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.MediaRecorder;
+import android.net.Network;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -42,6 +43,7 @@ import com.example.richardjiang.test.R;
 import com.example.richardjiang.test.activityMain.ApplicationHelper;
 import com.example.richardjiang.test.activityMain.PauseResumeListener;
 import com.example.richardjiang.test.networkHandler.NetworkService;
+import com.example.richardjiang.test.networkHandler.NetworkService.MessageHandleListener;
 import com.example.richardjiang.test.networkHandler.Utils;
 import com.example.richardjiang.test.networkHandler.controller.NetworkController;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
@@ -257,28 +259,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_video, container, false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
-        mButtonVideo = (Button) view.findViewById(R.id.video);
-        mButtonVideo.setOnClickListener(this);
-
-        mGroupVideo = (Button) view.findViewById(R.id.group);
-        mGroupVideo.setOnClickListener(this);
-
-        view.findViewById(R.id.info).setOnClickListener(this);
-
-        NetworkService.registerMessageHandler(internalMessageListener);
-
-    }
-
     private NetworkService.MessageHandleListener internalMessageListener = new NetworkService.MessageHandleListener() {
+
+        /*
         @Override
         public boolean handleMessage(NetworkMessageObject message) {
             String messageContent = "";
@@ -314,8 +297,48 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
             }
             return false;
         }
+        */
+
+
+        @Override
+        public boolean handleMessage(NetworkMessageObject message) {
+            if(mIsRecordingVideo){
+                stopRecordingVideo();
+                ApplicationHelper.showToastMessage("Received to stop");
+                return true;
+            } else{
+                startRecordingVideo();
+                ApplicationHelper.showToastMessage("Received to start");
+                return true;
+            }
+
+        }
     };
 
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_video, container, false);
+    }
+
+    @Override
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
+        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        mButtonVideo = (Button) view.findViewById(R.id.video);
+        mButtonVideo.setOnClickListener(this);
+
+        mGroupVideo = (Button) view.findViewById(R.id.group);
+        mGroupVideo.setOnClickListener(this);
+
+        view.findViewById(R.id.info).setOnClickListener(this);
+
+        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
+
+        NetworkService.registerMessageHandler(internalMessageListener);
+
+    }
 
     @Override
     public void onResume() {
@@ -350,7 +373,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
             case R.id.group: {
                 if (!mIsRecordingVideo) {
                     try {
-                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        //byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "startNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
@@ -359,14 +383,15 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                                         InternalMessage.startNow,
                                         myIP,
                                         targetIP));
-                        ApplicationHelper.showToastMessage("I send " + messageToSend);
+                        ApplicationHelper.showToastMessage("I send " + messageToSend + " from " + myIP.toString());
                         startRecordingVideo();
                     } catch (Exception e) {
                         ApplicationHelper.showToastMessage("Failed to send: startNow");
                     }
                 } else {
                     try {
-                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        //byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "stopNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
@@ -375,7 +400,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                                         InternalMessage.startNow,
                                         myIP,
                                         targetIP));
-                        ApplicationHelper.showToastMessage("I send " + messageToSend);
+                        ApplicationHelper.showToastMessage("I send " + messageToSend + " from " + myIP.toString());
                         stopRecordingVideo();
                     } catch (Exception e) {
                         ApplicationHelper.showToastMessage("Failed to send: stopNow");

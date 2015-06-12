@@ -36,7 +36,8 @@ public class ServerService extends NetworkService{
     private final Map<String, SelectionKey> keyMap = new TreeMap<String, SelectionKey>();
 
     private static MessageHandleListener internalMessageListener = new MessageHandleListener() {
-        @Override public boolean handleMessage(NetworkMessageObject message) {
+        @Override
+        public boolean handleMessage(NetworkMessageObject message) {
             ServerService thisService = (ServerService) WiFiDirectBroadcastConnectionController.getNetworkService();
             Log.v("DEBUG","got message: " + message);
 

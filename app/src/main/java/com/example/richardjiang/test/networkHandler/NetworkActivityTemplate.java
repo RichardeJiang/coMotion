@@ -21,7 +21,7 @@ abstract public class NetworkActivityTemplate extends Activity{
 
     //protected boolean performConnectionDiscovery(){return false;}
 
-    protected boolean performConnectionDiscovery() {return true;}
+    protected boolean performConnectionDiscovery() {return false;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
