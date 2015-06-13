@@ -32,6 +32,7 @@ import com.example.richardjiang.test.R;
 import com.example.richardjiang.test.activityMain.ApplicationHelper;
 import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
 import com.example.richardjiang.test.networkHandler.NetworkService;
+import com.example.richardjiang.test.networkHandler.NetworkService.MessageHandleListener;
 import com.example.richardjiang.test.networkHandler.Utils;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
 import com.example.richardjiang.test.networkHandler.impl.InternalMessage;
@@ -143,6 +144,7 @@ public class cameraTestActivity extends NetworkActivityTemplate {
         public boolean handleMessage(NetworkMessageObject message) {
 
 
+            //mCamera = getCameraInstance();
             mCamera.takePicture(null,null,mPicture);
             return true;
         }
