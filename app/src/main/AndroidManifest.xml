@@ -33,15 +33,18 @@
 
         <activity android:name=".networkHandler.activity.PeerSettingActivity" />
 
-        <!--
+
         <activity android:name=".cameraHandler.CameraActivity"
                   android:parentActivityName=".networkHandler.activity.PeerSettingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.richardjiang.test.networkHandler.activity.PeerSettingActivity" />
         </activity>
-        -->
+
+        <!--
         <activity android:name=".cameraTest.cameraTestActivity" />
+        -->
+        <activity android:name=".cameraTest2.CameraTestActivity2" />
 
     </application>
 

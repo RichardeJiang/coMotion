@@ -7,8 +7,12 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.richardjiang.test.R;
+import com.example.richardjiang.test.activityMain.ApplicationHelper;
 import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
+import com.example.richardjiang.test.networkHandler.NetworkService;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
+import com.example.richardjiang.test.networkHandler.impl.NetworkMessageObject;
+import com.example.richardjiang.test.cameraHandler.CameraFragment;
 
 public class CameraActivity extends NetworkActivityTemplate {
 
@@ -27,6 +31,9 @@ public class CameraActivity extends NetworkActivityTemplate {
     }
 
     @Override
-    protected boolean performConnectionDiscovery() {return true;}
+    protected boolean performConnectionDiscovery() {
+        return true;
+    }
+
 
 }

@@ -44,6 +44,7 @@ import com.example.richardjiang.test.activityMain.ApplicationHelper;
 import com.example.richardjiang.test.activityMain.PauseResumeListener;
 import com.example.richardjiang.test.networkHandler.NetworkService;
 import com.example.richardjiang.test.networkHandler.NetworkService.MessageHandleListener;
+import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
 import com.example.richardjiang.test.networkHandler.Utils;
 import com.example.richardjiang.test.networkHandler.controller.NetworkController;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
@@ -314,6 +315,11 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
         }
     };
+
+
+    protected boolean performConnectionDiscovery() {
+        return true;
+    }
 
 
 
