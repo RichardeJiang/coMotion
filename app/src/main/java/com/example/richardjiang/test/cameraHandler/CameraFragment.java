@@ -665,35 +665,60 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         return new File(context.getExternalFilesDir(null), "video.mp4");
     }
 
+
+
     private void startRecordingVideo() {
-        try {
-            // UI
-            mButtonVideo.setText(R.string.stop);
-            mGroupVideo.setText("Stop");
 
-            mIsRecordingVideo = true;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-            // Start recording
-            mMediaRecorder.start();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+                try {
+
+                    //IMPORTANT: THIS IS RUNNING IN BACKGROUND
+                    //SO CANNOT TOUCH UI COMPONENTS
+                    // UI
+                    mButtonVideo.setText(R.string.stop);
+                    mGroupVideo.setText("Stop");
+
+                    mIsRecordingVideo = true;
+
+                    // Start recording
+                    mMediaRecorder.start();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
     private void stopRecordingVideo() {
-        // UI
-        mIsRecordingVideo = false;
-        mButtonVideo.setText(R.string.record);
-        mGroupVideo.setText("Record");
-        // Stop recording
-        mMediaRecorder.stop();
-        mMediaRecorder.reset();
-        Activity activity = getActivity();
-        if (null != activity) {
-            Toast.makeText(activity, "Video saved: " + getVideoFile(activity),
-                    Toast.LENGTH_SHORT).show();
-        }
-        startPreview();
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //IMPORTANT: THIS IS RUNNING IN BACKGROUND
+                //SO CANNOT TOUCH UI COMPONENTS
+                // UI
+                mIsRecordingVideo = false;
+                mButtonVideo.setText(R.string.record);
+                mGroupVideo.setText("Record");
+                // Stop recording
+                mMediaRecorder.stop();
+                mMediaRecorder.reset();
+                Activity activity = getActivity();
+                if (null != activity) {
+                    Toast.makeText(activity, "Video saved: " + getVideoFile(activity),
+                            Toast.LENGTH_SHORT).show();
+                }
+                startPreview();
+
+            }
+        });
+
     }
 
     /**
