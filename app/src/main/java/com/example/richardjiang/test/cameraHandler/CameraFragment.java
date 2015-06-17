@@ -322,6 +322,18 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    //for declaration of the network part
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
+
+        NetworkService.registerMessageHandler(internalMessageListener);
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -340,11 +352,26 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.info).setOnClickListener(this);
 
+        /*
         WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
 
         NetworkService.registerMessageHandler(internalMessageListener);
+        */
 
     }
+
+    /*
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //Don't know whether this is the correct place to put this declaration
+
+        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
+
+        NetworkService.registerMessageHandler(internalMessageListener);
+    }
+    */
 
     @Override
     public void onResume() {
@@ -379,8 +406,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
             case R.id.group: {
                 if (!mIsRecordingVideo) {
                     try {
-                        //byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
+                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        //byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "startNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
@@ -396,14 +423,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                     }
                 } else {
                     try {
-                        //byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
+                        byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
+                        //byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "stopNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
                                 new NetworkMessageObject(
                                         messageToSend.getBytes(),
-                                        InternalMessage.startNow,
+                                        InternalMessage.stopNow,
                                         myIP,
                                         targetIP));
                         ApplicationHelper.showToastMessage("I send " + messageToSend + " from " + myIP.toString());

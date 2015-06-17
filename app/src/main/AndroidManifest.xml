@@ -43,8 +43,9 @@
 
         <!--
         <activity android:name=".cameraTest.cameraTestActivity" />
-        -->
+
         <activity android:name=".cameraTest2.CameraTestActivity2" />
+        -->
 
     </application>
 

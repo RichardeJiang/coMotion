@@ -55,13 +55,11 @@ public class PeerSettingActivity extends NetworkActivityTemplate implements OnIt
     }
 
 
-    /*
+
     public void startCamera(View view){
         Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraActivity.class);
         startActivity(intent);
     }
-    */
-
 
     /*
     public void startCamera(View view) {
@@ -70,10 +68,12 @@ public class PeerSettingActivity extends NetworkActivityTemplate implements OnIt
     }
     */
 
+    /*
     public void startCamera(View view) {
         Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraTestActivity2.class);
         startActivity(intent);
     }
+    */
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

@@ -17,6 +17,11 @@ import com.example.richardjiang.test.cameraHandler.CameraFragment;
 public class CameraActivity extends NetworkActivityTemplate {
 
     @Override
+    protected boolean performConnectionDiscovery() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
@@ -27,13 +32,10 @@ public class CameraActivity extends NetworkActivityTemplate {
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, CameraFragment.newInstance())
                     .commit();
+
+            //for testing
+            System.out.println("THIS IS INSIDE THE FRAGMENT INITIALIZATION!");
         }
     }
-
-    @Override
-    protected boolean performConnectionDiscovery() {
-        return true;
-    }
-
 
 }
