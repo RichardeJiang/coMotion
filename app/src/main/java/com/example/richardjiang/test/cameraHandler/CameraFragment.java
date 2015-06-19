@@ -25,12 +25,14 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.MediaRecorder;
 import android.net.Network;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -55,9 +57,11 @@ import com.example.richardjiang.test.cameraHandler.CameraActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -76,6 +80,10 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * An indicator to indicate which mode the camera is in (single:1 or group:2)
+     */
+    private int captureMode;
 
     /**
      * An {@link AutoFitTextureView} for camera preview.
@@ -398,7 +406,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 if (mIsRecordingVideo) {
                     stopRecordingVideo();
                 } else {
+                    captureMode = 1;
                     startRecordingVideo();
+
                 }
                 break;
             }
@@ -407,7 +417,6 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 if (!mIsRecordingVideo) {
                     try {
                         byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        //byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "startNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
@@ -417,14 +426,15 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                                         myIP,
                                         targetIP));
                         ApplicationHelper.showToastMessage("I send " + messageToSend + " from " + myIP.toString());
+                        captureMode = 2;
                         startRecordingVideo();
+
                     } catch (Exception e) {
                         ApplicationHelper.showToastMessage("Failed to send: startNow");
                     }
                 } else {
                     try {
                         byte[] targetIP = Utils.getBytesFromIp("255.255.255.255");
-                        //byte[] targetIP = Utils.getBytesFromIp("-1.-1.-1.-1");
                         byte[] myIP = WiFiDirectBroadcastConnectionController.getNetworkService().getMyIp();
                         String messageToSend = "stopNow";
                         WiFiDirectBroadcastConnectionController.getNetworkService().sendMessage(
@@ -662,7 +672,26 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     }
 
     private File getVideoFile(Context context) {
-        return new File(context.getExternalFilesDir(null), "video.mp4");
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "coMotion");
+
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("CREATION OF NEW DIR", "failed to create directory");
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        File videoFile;
+
+        videoFile = new File(mediaStorageDir.getPath() + File.separator +
+                "VID_"+ timeStamp + ".mp4");
+        return videoFile;
+
+        //return new File(context.getExternalFilesDir(null), "video.mp4");
     }
 
 
@@ -677,9 +706,15 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
                     //IMPORTANT: THIS IS RUNNING IN BACKGROUND
                     //SO CANNOT TOUCH UI COMPONENTS
+                    //THUS RUNONUITHREAD IS USED
                     // UI
-                    mButtonVideo.setText(R.string.stop);
-                    mGroupVideo.setText("Stop");
+
+                    //TODO: maybe disable one when the other is pressed? Using animation?
+                    if(captureMode == 1) {
+                        mButtonVideo.setText(R.string.stop);
+                    } else if(captureMode == 2) {
+                        mGroupVideo.setText(R.string.stop);
+                    }
 
                     mIsRecordingVideo = true;
 
@@ -704,8 +739,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 //SO CANNOT TOUCH UI COMPONENTS
                 // UI
                 mIsRecordingVideo = false;
-                mButtonVideo.setText(R.string.record);
-                mGroupVideo.setText("Record");
+
+                if(captureMode == 1) {
+                    mButtonVideo.setText(R.string.record);
+                } else if(captureMode == 2){
+                    mGroupVideo.setText(R.string.group_record);
+                }
+
+
                 // Stop recording
                 mMediaRecorder.stop();
                 mMediaRecorder.reset();
@@ -720,6 +761,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         });
 
     }
+
+
+    // TODO: swipe to choose single or group capture
+    /*
+    public boolean onTouchEvent(MotionEvent event) {
+        return true;
+    }
+    */
 
     /**
      * Compares two {@code Size}s based on their areas.

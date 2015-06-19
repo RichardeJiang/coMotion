@@ -2,11 +2,15 @@
     <string name="app_name">Test</string>
 
     <string name="action_settings">Settings</string>
-    <string name="record">Record</string>
+    <string name="record">Record Single</string>
     <string name="stop">Stop</string>
     <string name="description_info">Info</string>
     <string name="group_record">Record All</string>
     <string name="picture">Picture</string>
+    <string name="got_it">Got it</string>
+    <string name="help_message">Tap FIND PEERS to discover peer devices
+    around. \n\nAfter connection tap START CAPTURING to enable camera view.
+    \n\nRECORD ALL will make all connected devices start capturing videos.</string>
     <!--
     <string name="intro_message">Press to start recording</string>
     -->

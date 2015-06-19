@@ -1,5 +1,8 @@
 package com.example.richardjiang.test.activityMain;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -24,12 +27,26 @@ public class MainActivity extends NetworkActivityTemplate {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Context context = this;
         Button btnFindPeer = (Button) findViewById(R.id.btnPeerSettings);
         btnFindPeer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ApplicationHelper.getActivityInstance(), PeerSettingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button btnHelp = (Button) findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(context)
+                        //.setMessage(R.string.intro_message)
+                        .setMessage(R.string.help_message)
+                        .setPositiveButton(R.string.got_it, null)
+                        .show();
             }
         });
 
