@@ -16,7 +16,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -55,11 +58,12 @@ public class PeerSettingActivity extends NetworkActivityTemplate implements OnIt
     }
 
 
-
+    /*
     public void startCamera(View view){
         Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraActivity.class);
         startActivity(intent);
     }
+    */
 
     /*
     public void startCamera(View view) {
@@ -74,6 +78,16 @@ public class PeerSettingActivity extends NetworkActivityTemplate implements OnIt
         startActivity(intent);
     }
     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_peer_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

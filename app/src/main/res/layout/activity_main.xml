@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <!--
     android:background="#0099cc"
@@ -22,22 +26,24 @@
          android:fitsSystemWindows.
     -->
 
+    <!--
+    this linear is for the original checkbox view
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="horizontal"
         android:gravity="bottom">
+        -->
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:orientation="horizontal"
-
-            tools:ignore="UselessParent" >
+    <LinearLayout
+        android:id="@+id/fullscreen_content_controls"
+        style="?buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        tools:ignore="UselessParent" >
 
             <!--
             android:background="@color/bright_foreground_material_dark"
@@ -48,23 +54,78 @@
                 android:layout_weight="1"
                 android:text="ROI" />
                 -->
-            <Button
-                android:id="@+id/btnPeerSettings"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@color/driver"
-                android:text="Find Peers"
-                />
-            <Button
-                android:id="@+id/btnHelp"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@color/driver"
-                android:text="Help"
-                />
-        </LinearLayout>
+
+    <!--
+    android:layout_gravity="right|bottom"
+    -->
+
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/driver"
+            android:elevation="10dp"
+            android:text="Help"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+
+            android:id="@+id/textView1"
+            android:layout_height="40dp"
+            android:text=" "
+            android:layout_gravity="center_horizontal"
+            >
+
+        </TextView>
+
+        <Button
+            android:id="@+id/btnPeerSettings"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/driver"
+            android:elevation="10dp"
+            android:text="Find Peers"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+
+            android:id="@+id/textView2"
+            android:layout_height="40dp"
+            android:text=" "
+            android:layout_gravity="center_horizontal"
+            >
+
+        </TextView>
+
+        <Button
+            android:id="@+id/btnStartCapturing"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/driver"
+            android:elevation="10dp"
+            android:text="Start Capturing"
+            android:layout_gravity="center_horizontal"
+            />
+
     </LinearLayout>
+
+
+
+    <!--
+    android:layout_gravity="left|bottom"
+    -->
+
+    <!--
+    </LinearLayout>
+    -->
 
 </FrameLayout>

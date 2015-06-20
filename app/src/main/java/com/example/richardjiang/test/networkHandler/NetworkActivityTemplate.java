@@ -14,7 +14,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-abstract public class NetworkActivityTemplate extends Activity{
+abstract public class NetworkActivityTemplate extends Activity {
     protected NetworkController networkController;
 
     private List<PauseResumeListener> listeners = new ArrayList<PauseResumeListener>();

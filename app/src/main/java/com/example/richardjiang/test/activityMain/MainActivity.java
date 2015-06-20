@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.support.v7.widget.Toolbar;
 
 import com.example.richardjiang.test.R;
+import com.example.richardjiang.test.cameraHandler.CameraActivity;
 import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
 import com.example.richardjiang.test.networkHandler.activity.PeerSettingActivity;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
@@ -21,11 +23,18 @@ public class MainActivity extends NetworkActivityTemplate {
 
     private ActivityStatus activityStatus = ActivityStatus.NONE;
     private String debugTag = "MAIN_ACTIVITY";
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //IMPORTANT: this is how to set up the toolbar icon and title
+        //when there is no actionbar extended
+        //mToolbar.setTitle("OK");
 
         final Context context = this;
         Button btnFindPeer = (Button) findViewById(R.id.btnPeerSettings);
@@ -47,6 +56,15 @@ public class MainActivity extends NetworkActivityTemplate {
                         .setMessage(R.string.help_message)
                         .setPositiveButton(R.string.got_it, null)
                         .show();
+            }
+        });
+
+        Button btnStartCapturing = (Button) findViewById(R.id.btnStartCapturing);
+        btnStartCapturing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraActivity.class);
+                startActivity(intent);
             }
         });
 
