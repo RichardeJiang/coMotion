@@ -5,9 +5,6 @@ package com.example.richardjiang.test.networkHandler.activity;
  */
 import com.example.richardjiang.test.R;
 import com.example.richardjiang.test.activityMain.ApplicationHelper;
-import com.example.richardjiang.test.cameraHandler.CameraActivity;
-import com.example.richardjiang.test.cameraTest.cameraTestActivity;
-import com.example.richardjiang.test.cameraTest2.CameraTestActivity2;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
 import com.example.richardjiang.test.networkHandler.model.Phone;
 import com.example.richardjiang.test.networkHandler.view.WifiListAdapter;
@@ -25,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-//import com.example.sesame_social_gaming_project.R;
 
 import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
 
@@ -57,27 +53,6 @@ public class PeerSettingActivity extends NetworkActivityTemplate implements OnIt
         WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
     }
 
-
-    /*
-    public void startCamera(View view){
-        Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraActivity.class);
-        startActivity(intent);
-    }
-    */
-
-    /*
-    public void startCamera(View view) {
-        Intent intent = new Intent(ApplicationHelper.getActivityInstance(), cameraTestActivity.class);
-        startActivity(intent);
-    }
-    */
-
-    /*
-    public void startCamera(View view) {
-        Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraTestActivity2.class);
-        startActivity(intent);
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

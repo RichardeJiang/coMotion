@@ -368,18 +368,6 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    /*
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //Don't know whether this is the correct place to put this declaration
-
-        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
-
-        NetworkService.registerMessageHandler(internalMessageListener);
-    }
-    */
 
     @Override
     public void onResume() {
