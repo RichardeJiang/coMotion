@@ -40,6 +40,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+//wearable
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
+
 import com.example.richardjiang.test.R;
 
 import com.example.richardjiang.test.activityMain.ApplicationHelper;
