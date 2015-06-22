@@ -41,6 +41,11 @@
                 android:value="com.example.richardjiang.test.activityMain.MainActivity" />
         </activity>
 
+        <!--
+        <activity android:name=".cameraTest.cameraTestActivity" />
+
+        <activity android:name=".cameraTest2.CameraTestActivity2" />
+        -->
 
     </application>
 
