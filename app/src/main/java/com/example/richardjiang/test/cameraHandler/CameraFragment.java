@@ -329,12 +329,6 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-
-    protected boolean performConnectionDiscovery() {
-        return true;
-    }
-
-
     //for declaration of the network part
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -345,8 +339,6 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
         NetworkService.registerMessageHandler(internalMessageListener);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -365,26 +357,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.info).setOnClickListener(this);
 
-        /*
-        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
-
-        NetworkService.registerMessageHandler(internalMessageListener);
-        */
 
     }
-
-    /*
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //Don't know whether this is the correct place to put this declaration
-
-        WiFiDirectBroadcastConnectionController.getInstance().discoverPeers();
-
-        NetworkService.registerMessageHandler(internalMessageListener);
-    }
-    */
 
     @Override
     public void onResume() {
@@ -723,6 +697,25 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
 
                     mIsRecordingVideo = true;
 
+
+                    //Notification trial part
+                    int notificationID = 001;
+                    NotificationCompat.Builder notificationBuilder =
+                            new NotificationCompat.Builder(ApplicationHelper.getActivityInstance())
+                                .setSmallIcon(R.drawable.ic_notification)
+                                .setContentTitle("Test")
+                                .setContentText("Test the notification");
+
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(ApplicationHelper.getActivityInstance());
+
+                    notificationManager.notify(notificationID,notificationBuilder.build());
+
+
+
+
+
+
                     // Start recording
                     mMediaRecorder.start();
                 } catch (IllegalStateException e) {
@@ -750,7 +743,6 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 } else if(captureMode == 2){
                     mGroupVideo.setText(R.string.group_record);
                 }
-
 
                 // Stop recording
                 mMediaRecorder.stop();
