@@ -20,13 +20,13 @@ import com.google.android.gms.wearable.WearableListenerService;
 public class MessageReceiverService extends WearableListenerService {
     private static final String TAG = "MessageReceiverService";
 
-    private ClientService deviceClient;
+    private ClientService client;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        deviceClient = ClientService.getInstance(this);
+        client = ClientService.getInstance(this);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MessageReceiverService extends WearableListenerService {
                 if (path.startsWith("/filter")) {
                     DataMap dataMap = DataMapItem.fromDataItem(dataItem).getDataMap();
                     int filterById = dataMap.getInt(Utils.FILTER);
-                    deviceClient.setSensorFilter(filterById);
+                    client.setSensorFilter(filterById);
                 }
             }
         }
