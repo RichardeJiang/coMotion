@@ -1,0 +1,1 @@
+1. When to include the instance of the class?
