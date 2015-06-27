@@ -34,9 +34,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DataStorageService extends WearableListenerService {
     private static final String TAG = "DataStorageService";
-    private static final String SHARED_PREFS_KEY = "Data_Storage_Prefs";
-    public static final String SENSOR_DATA_PATH = "/sensor-data";
-    private static final String SLEEPING_KEY = "sleeping";
 
     private GoogleApiClient mGoogleApiClient;
     private SharedPreferences preferences;
@@ -44,7 +41,7 @@ public class DataStorageService extends WearableListenerService {
     @Override
     public void onCreate() {
         super.onCreate();
-        preferences = getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(Utils.SHARED_PREFS_KEY, Context.MODE_PRIVATE);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
                 .build();
@@ -69,10 +66,10 @@ public class DataStorageService extends WearableListenerService {
         for (DataEvent event : events) {
             Uri uri = event.getDataItem().getUri();
             String path = uri.getPath();
-            if (SENSOR_DATA_PATH.equals(path) && event.getType() == DataEvent.TYPE_CHANGED) {
+            if (Utils.SENSOR_DATA_PATH.equals(path) && event.getType() == DataEvent.TYPE_CHANGED) {
                 byte[] rawData = event.getDataItem().getData();
                 DataMap sensorData = DataMap.fromByteArray(rawData);
-                sensorData.putBoolean(SLEEPING_KEY, preferences.getBoolean(SLEEPING_KEY, false));
+                sensorData.putBoolean(Utils.SLEEPING_KEY, preferences.getBoolean(Utils.SLEEPING_KEY, false));
                 Log.d(TAG, "Recording new data item: " + sensorData);
                 saveData(sensorData);
             }
@@ -111,7 +108,8 @@ public class DataStorageService extends WearableListenerService {
         }
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         directory.mkdirs();
-        File file = new File(directory, "wearable_data.txt");
+        long timeStamp = System.currentTimeMillis();
+        File file = new File(directory, "wearable_data_"+timeStamp+".txt");
         String dataJSON = dataMapAsJSONObject(data).toString() + "\n";
         try {
             FileOutputStream stream = new FileOutputStream(file, true);

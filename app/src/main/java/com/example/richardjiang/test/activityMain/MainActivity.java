@@ -16,6 +16,8 @@ import com.example.richardjiang.test.cameraHandler.CameraActivity;
 import com.example.richardjiang.test.networkHandler.NetworkActivityTemplate;
 import com.example.richardjiang.test.networkHandler.activity.PeerSettingActivity;
 import com.example.richardjiang.test.networkHandler.controller.WiFiDirectBroadcastConnectionController;
+import com.example.richardjiang.test.remoteSensorHandler.Utils;
+import com.example.richardjiang.test.remoteSensorHandler.WearableMessageService;
 
 
 public class MainActivity extends NetworkActivityTemplate {
@@ -64,6 +66,26 @@ public class MainActivity extends NetworkActivityTemplate {
             public void onClick(View v) {
                 Intent intent = new Intent(ApplicationHelper.getActivityInstance(), CameraActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button btnStartWatch = (Button) findViewById(R.id.btnStartWatch);
+        btnStartWatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ApplicationHelper.getActivityInstance(), WearableMessageService.class);
+                intent.putExtra(Utils.STORE_COMMAND, Utils.START_MEASUREMENT);
+                startService(intent);
+            }
+        });
+
+        Button btnStopWatch = (Button) findViewById(R.id.btnStopWatch);
+        btnStopWatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ApplicationHelper.getActivityInstance(), WearableMessageService.class);
+                intent.putExtra(Utils.STORE_COMMAND, Utils.STOP_MEASUREMENT);
+                startService(intent);
             }
         });
 

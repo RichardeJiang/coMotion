@@ -116,6 +116,57 @@
             android:layout_gravity="center_horizontal"
             />
 
+
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+
+            android:id="@+id/textView3"
+            android:layout_height="40dp"
+            android:text=" "
+            android:layout_gravity="center_horizontal"
+            >
+
+        </TextView>
+
+        <Button
+            android:id="@+id/btnStartWatch"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/driver"
+            android:elevation="10dp"
+            android:text="Start Watch"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+
+            android:id="@+id/textView4"
+            android:layout_height="40dp"
+            android:text=" "
+            android:layout_gravity="center_horizontal"
+            >
+
+        </TextView>
+
+        <Button
+            android:id="@+id/btnStopWatch"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/driver"
+            android:elevation="10dp"
+            android:text="Stop Watch"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+
+
     </LinearLayout>
 
 

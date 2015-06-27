@@ -13,4 +13,7 @@ public class Utils {
     public static final String STOP_MEASUREMENT = "/stop";
     public static final String SENSOR_DATA_PATH = "/sensor-data";
     public static final String STORE_COMMAND = "get_type";
+
+    public static final String SHARED_PREFS_KEY = "Data_Storage_Prefs";
+    public static final String SLEEPING_KEY = "sleeping";
 }

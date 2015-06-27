@@ -50,6 +50,8 @@ public class WearDataCollector extends WearableListenerService implements Sensor
         mExecutorService = Executors.newCachedThreadPool();
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 
+        System.out.println("INSIDE THE WEAR DATA COLLECTION METHOD!");
+
         //notification on the watch
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("coMotion");
@@ -100,6 +102,7 @@ public class WearDataCollector extends WearableListenerService implements Sensor
         // Check to see if the message is to start an activity
         String path = messageEvent.getPath();
         Log.d(TAG, "onMessageReceived: " + path);
+        System.out.println("INSIDE THE MESSAGE RECEIVING METHOD");
 
         if (path.equals(Utils.START_MEASUREMENT)) {
             startSensorListeners();
@@ -115,6 +118,9 @@ public class WearDataCollector extends WearableListenerService implements Sensor
 
         Log.d(TAG, "snedSensorData");
 
+        //for debugging purpose
+        System.out.println("INSIDE THE SENDING METHOD");
+
         mSensorData = PutDataMapRequest.create(Utils.SENSOR_DATA_PATH);
         mSensorData.getDataMap().putLong(Utils.TIMESTAMP, timeStamp);
         mSensorData.getDataMap().putInt(Utils.ACCURACY, accuracy);
@@ -129,6 +135,7 @@ public class WearDataCollector extends WearableListenerService implements Sensor
 
     private void startSensorListeners() {
         Log.d(TAG, "startSensorListeners");
+        System.out.println("SUCCESSFULLY STARTED SENSOR LISTENER!");
         //This is how to get all the sensors
         //here we start with the linear accelerometer
         //List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);

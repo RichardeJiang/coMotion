@@ -52,7 +52,14 @@ public class WearableMessageService extends IntentService {
         }
     }
 
+    /*
 
+    the corresponding putExtra method which should be inserted inside the caller
+
+    Intent serviceIntent = new Intent(this,ListenLocationService.class);
+    serviceIntent.putExtra("From", "Main");
+    startService(serviceIntent);
+    */
     @Override
     protected void onHandleIntent(Intent intent) {
         if(commandType.equals(Utils.START_MEASUREMENT)) {
