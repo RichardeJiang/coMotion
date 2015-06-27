@@ -20,6 +20,11 @@ android {
 }
 
 dependencies {
+    wearApp project(':wearable')
+
+    compile 'com.google.android.gms:play-services-wearable:7.3.0'
+    compile 'com.google.android.gms:play-services-analytics:7.3.0'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile "com.android.support:support-v4:22.0.+"
