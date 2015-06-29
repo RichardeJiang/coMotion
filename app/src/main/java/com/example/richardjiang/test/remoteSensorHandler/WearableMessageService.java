@@ -65,6 +65,7 @@ public class WearableMessageService extends IntentService {
         if(commandType.equals(Utils.START_MEASUREMENT)) {
             for (String node : getNodes()) {
                 sendMessage(node, Utils.START_MEASUREMENT);
+                System.out.println("IIINNNFFFOOORRRMMMAAATTTIIIOO SENT");
             }
         }
         else if(commandType.equals(Utils.STOP_MEASUREMENT)) {

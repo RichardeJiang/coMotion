@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
-        applicationId "com.example.richardjiang.wearable"
+        applicationId "com.example.richardjiang.test.wearable"
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1

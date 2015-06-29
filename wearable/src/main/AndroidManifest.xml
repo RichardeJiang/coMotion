@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.richardjiang.wearable" >
+    package="com.example.richardjiang.test" >
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -25,7 +25,7 @@
         <service android:name=".SensorService" />
         -->
 
-        <service android:name=".WearDataCollector" >
+        <service android:name="com.example.richardjiang.test.wearable.WearDataCollector" >
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>

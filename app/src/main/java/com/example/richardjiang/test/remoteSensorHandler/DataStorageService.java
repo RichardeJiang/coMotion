@@ -46,6 +46,9 @@ public class DataStorageService extends WearableListenerService {
                 .addApi(Wearable.API)
                 .build();
         mGoogleApiClient.connect();
+
+        //for testing purpose
+        System.out.println("INSIDE THE DATA STORAGE PART!!!");
     }
 
     @Override
@@ -106,10 +109,26 @@ public class DataStorageService extends WearableListenerService {
             Log.d(TAG, "External Storage Not Writable");
             return;
         }
+
+        /*
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         directory.mkdirs();
         long timeStamp = System.currentTimeMillis();
         File file = new File(directory, "wearable_data_"+timeStamp+".txt");
+        */
+
+        File directory = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS), "coMotion");
+        if (! directory.exists()){
+            if (! directory.mkdirs()){
+                Log.d("CREATION OF NEW DIR", "failed to create directory");
+                return;
+            }
+        }
+        long timeStamp = System.currentTimeMillis();
+        File file = new File(directory.getPath()+File.separator+"wearable_data"+timeStamp+".txt");
+
+
         String dataJSON = dataMapAsJSONObject(data).toString() + "\n";
         try {
             FileOutputStream stream = new FileOutputStream(file, true);
